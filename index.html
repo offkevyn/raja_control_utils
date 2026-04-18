@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raja Rastreio — Raja Aluguel de Veículos</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --red:     #C32025;
+      --orange:  #EF5029;
+      --bg:      #FAFAFA;
+      --card:    #F3F2F5;
+      --gray:    #EBEBEB;
+      --text:    #272727;
+      --muted:   #87898C;
+      --white:   #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--white);
+      border-bottom: 3px solid var(--red);
+      padding: 40px 24px 48px;
+      text-align: center;
+    }
+
+    header img.logo {
+      height: 64px;
+      margin-bottom: 28px;
+    }
+
+    header h1 {
+      font-size: clamp(26px, 5vw, 42px);
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+    }
+
+    header h1 span {
+      color: var(--red);
+    }
+
+    header p {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 28px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--red);
+      color: var(--white);
+      padding: 14px 36px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      transition: opacity .2s;
+    }
+
+    .btn:hover { opacity: .85; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      list-style: none;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    nav a {
+      display: block;
+      padding: 15px 18px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color .2s;
+      border-bottom: 2px solid transparent;
+    }
+
+    nav a:hover {
+      color: var(--red);
+      border-bottom-color: var(--red);
+    }
+
+    /* ── WRAPPER ── */
+    .wrapper {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── SECTION ── */
+    section {
+      padding: 64px 24px;
+      border-bottom: 1px solid var(--gray);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    section:last-of-type { border-bottom: none; }
+
+    .label {
+      display: inline-block;
+      background: var(--card);
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 50px;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      font-size: clamp(20px, 4vw, 28px);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 16px;
+      letter-spacing: -0.3px;
+    }
+
+    p {
+      font-size: 15px;
+      color: #444;
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 28px 0 8px;
+      padding-left: 12px;
+      border-left: 3px solid var(--red);
+    }
+
+    /* ── FEATURES GRID ── */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 28px;
+      list-style: none;
+    }
+
+    .features li {
+      background: var(--white);
+      border: 1.5px solid var(--gray);
+      border-radius: 15px;
+      padding: 16px 18px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .features li::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      flex-shrink: 0;
+    }
+
+    /* ── STEPS ── */
+    .steps {
+      list-style: none;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .steps li {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: var(--white);
+      border: 1.5px solid var(--gray);
+      border-radius: 15px;
+      padding: 18px 20px;
+    }
+
+    .steps .num {
+      background: var(--red);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 13px;
+      border-radius: 50px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .steps .content strong {
+      display: block;
+      font-size: 15px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .steps .content span {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* ── CONTACT ── */
+    .contact-card {
+      background: var(--white);
+      border: 1.5px solid var(--gray);
+      border-radius: 15px;
+      padding: 36px 24px;
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    .contact-card p {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .contact-card .email {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--white);
+      border-top: 1px solid var(--gray);
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    footer strong { color: var(--text); }
+
+    footer .divider {
+      display: inline-block;
+      margin: 0 8px;
+      color: var(--gray);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 480px) {
+      nav a { padding: 14px 12px; font-size: 13px; }
+      .features { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <img src="logo.png" alt="Raja Control" class="logo" />
+    <h1>Raja <span>Rastreio</span></h1>
+    <p>Gestão e rastreamento de frota em tempo real para a Raja Aluguel de Veículos.</p>
+    <a href="#contato" class="btn">Falar com suporte</a>
+  </header>
+
+  <!-- NAV -->
+  <nav>
+    <ul>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#privacidade">Privacidade</a></li>
+      <li><a href="#exclusao">Excluir conta</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <span class="label">Sobre o app</span>
+    <h2>Rastreamento de frota simplificado</h2>
+    <p>
+      O <strong>Raja Rastreio</strong> é o aplicativo oficial da
+      <strong>Raja Aluguel de Veículos</strong> para monitoramento de frota.
+      Motoristas registram rotas ativas e transmitem localização em tempo real,
+      enquanto gestores acompanham todos os veículos pelo painel administrativo.
+    </p>
+    <ul class="features">
+      <li>Rastreamento GPS em tempo real</li>
+      <li>Histórico de rotas e trajetos</li>
+      <li>Notificação durante rota ativa</li>
+      <li>Painel para gestores</li>
+      <li>Sincronização via Firebase</li>
+      <li>Funciona com tela bloqueada</li>
+    </ul>
+  </section>
+
+  <!-- PRIVACIDADE -->
+  <section id="privacidade">
+    <span class="label">Política de Privacidade</span>
+    <h2>Como tratamos seus dados</h2>
+    <p>Esta política descreve como o <strong>Raja Rastreio</strong> coleta, usa e armazena suas informações.</p>
+
+    <h3>Dados coletados</h3>
+    <p>Coletamos nome de usuário, endereço de e-mail e CPF para viabilizar o funcionamento da conta. Durante rotas ativas, coletamos dados de localização GPS (latitude, longitude, velocidade e direção) para fins de rastreamento de frota.</p>
+
+    <h3>Como usamos seus dados</h3>
+    <p>O e-mail é utilizado para login e recuperação de senha. O CPF é usado para recuperar informações vinculadas à conta. Os dados de localização são transmitidos em tempo real para que gestores acompanhem a frota — o rastreamento ocorre somente quando uma rota está em andamento.</p>
+
+    <h3>Compartilhamento com terceiros</h3>
+    <p>Nenhum dado coletado é compartilhado com terceiros. Suas informações pessoais não são divulgadas a partes externas.</p>
+
+    <h3>Segurança</h3>
+    <p>Adotamos práticas de segurança padrão do setor. Nenhum método de transmissão pela internet ou armazenamento eletrônico é 100% seguro, mas nos comprometemos a usar todos os recursos disponíveis para proteger seus dados.</p>
+
+    <h3>Retenção de dados</h3>
+    <p>Seus dados ficam armazenados enquanto sua conta estiver ativa e são removidos somente mediante solicitação do usuário.</p>
+
+    <h3>Seus direitos</h3>
+    <p>Você pode acessar e atualizar seus dados a qualquer momento. Para solicitar a remoção completa, entre em contato pelo e-mail abaixo.</p>
+
+    <h3>Alterações nesta política</h3>
+    <p>Eventuais alterações entram em vigor imediatamente após a publicação. Recomendamos revisitar esta página periodicamente.</p>
+  </section>
+
+  <!-- EXCLUSÃO -->
+  <section id="exclusao">
+    <span class="label">Exclusão de conta</span>
+    <h2>Como excluir sua conta</h2>
+    <p>Para solicitar a exclusão da sua conta e de todos os dados associados, siga os passos abaixo.</p>
+
+    <ul class="steps">
+      <li>
+        <div class="num">1</div>
+        <div class="content">
+          <strong>Envie um e-mail</strong>
+          <span>Escreva para <strong>rajarastreio@gmail.com</strong> a partir do e-mail cadastrado na sua conta.</span>
+        </div>
+      </li>
+      <li>
+        <div class="num">2</div>
+        <div class="content">
+          <strong>Inclua as informações necessárias</strong>
+          <span>Informe seu nome de usuário, um comprovante de titularidade da conta e a solicitação explícita de exclusão.</span>
+        </div>
+      </li>
+      <li>
+        <div class="num">3</div>
+        <div class="content">
+          <strong>Confirmação e exclusão</strong>
+          <span>Após verificarmos sua identidade, todos os seus dados serão excluídos imediatamente. Nenhuma informação pessoal é mantida após a conclusão do processo.</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <span class="label">Contato</span>
+    <h2>Fale com a gente</h2>
+    <p>Dúvidas sobre o app, sua conta ou esta política de privacidade? Entre em contato com nossa equipe de suporte.</p>
+    <div class="contact-card">
+      <p>Suporte Raja Rastreio</p>
+      <p class="email">rajarastreio@gmail.com</p>
+      <a href="mailto:rajarastreio@gmail.com" class="btn">Enviar e-mail</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <strong>Raja Aluguel de Veículos</strong>
+    <span class="divider">·</span>
+    Raja Rastreio
+    <span class="divider">·</span>
+    © 2026
+  </footer>
+
+</body>
+</html>
